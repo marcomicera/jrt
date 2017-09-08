@@ -73,40 +73,44 @@ public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
      * @return the command output
      */
     @Override
-    public String executeCommand(String cmd) {
+    public String[] executeCommand(String cmd, String path) {
         System.out.println("Server has requested the " + cmd + " command. Replying...");        
         
         StringBuffer output = new StringBuffer();
-        
-        String[] splitted = cmd.split("\\s+");
+
         Process p;
-        
+        String nextPath = "";
         try {
-            if(splitted[2].equals("cd") == true){
-                p = Runtime.getRuntime().exec(
-                    "cmd /c cd",
-                    null,
-                    new File("./" + splitted[3])
-                );
-                System.out.println("edefdefd");
-            } 
-            else{
-                p = Runtime.getRuntime().exec(cmd);
-                System.out.println(splitted[2]);
-            }
-                
+            p = Runtime.getRuntime().exec(cmd + " && cd", null, new File(path));
             p.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
             String line = "";
-            while ((line = reader.readLine())!= null)
+            
+            while ((line = reader.readLine())!= null){
                 output.append(line + "\n");
+                nextPath = line;
+            }
         } 
         catch (Exception e){e.printStackTrace();}
-
-        return output.toString();
+        
+        String[] splitted = output.toString().split("\\n+");
+        output.delete(0, output.length());
+        
+        for(int i=0; i < splitted.length - 1 ;i++)
+            output.append(splitted[i] + "\n");
+                
+        
+        String[] arrayOutput = new String[2];
+        arrayOutput[0] = output.toString();
+        arrayOutput[1] = nextPath;
+        
+        return arrayOutput;
     }
-    
+    @Override
+    public String[] executeCommand(String cmd) {
+        return executeCommand(cmd,"./");
+    }
     /**
      * Starts the RMI registry
      * @throws RemoteException 

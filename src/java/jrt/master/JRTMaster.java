@@ -17,8 +17,6 @@
 
 package jrt.master;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -26,10 +24,6 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import jrt.slave.JRTSlave;
 
 /**
@@ -37,13 +31,14 @@ import jrt.slave.JRTSlave;
  * @author Marco Micera, Leonardo Bernardi
  */
 
-public class JRTMaster extends HttpServlet {
+public class JRTMaster {
     /**
      * It creates a connection between this master and a specified slave
      * @param ipAddr slave's IP address
      * @param port slave's port
      * @return a slave object or null if there was an error during connection
      */
+    private static String path;
     private static JRTSlave connect(String ipAddr, int port) {
         try {
             return (JRTSlave)Naming.lookup("//" + ipAddr + ":" + port + "/RemoteTerminal");
@@ -52,9 +47,13 @@ public class JRTMaster extends HttpServlet {
         }
     }
     
-    private static String executeCommand(JRTSlave slave, String cmd) {
+    private static String[] executeCommand(JRTSlave slave, String cmd) {
         try {
-            return slave.executeCommand("cmd /c " + cmd);
+            if(path == null || path.equals("") == true)
+                return slave.executeCommand("cmd /c " + cmd);
+            else
+                return slave.executeCommand("cmd /c " + cmd, path); 
+            
         } catch (RemoteException ex) {
             Logger.getLogger(JRTMaster.class.getName()).log(Level.SEVERE, null, ex);
             return null;
@@ -62,7 +61,7 @@ public class JRTMaster extends HttpServlet {
     }
     
     private static String pwd(JRTSlave slave) {
-        String pwd = executeCommand(slave, "echo %cd%");
+        String pwd = executeCommand(slave, "echo %cd%")[0];
         return pwd.trim();
     }
     
@@ -151,27 +150,12 @@ public class JRTMaster extends HttpServlet {
                         break;
                     }
                     
-                    String result = executeCommand(slave, cmd);
-                    System.out.println((result == null) ? "Command unsupported" : result);
-                        
+                    String[] result = executeCommand(slave, cmd);
+                    System.out.println((result == null) ? "Command unsupported" : result[0]);
+                    path = result[1];
+                    
                     break;
             }
         }
     }
-    
-    @Override
-    public void init() throws ServletException {
-   }
-
-    @Override
-   public void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
-      
-      // Set response content type
-      response.setContentType("text/html");
-
-      // Actual logic goes here.
-      PrintWriter out = response.getWriter();
-      out.println("<h1>HELLO WORLD, IT WORKS!!!!!</h1>");
-   }
 }
