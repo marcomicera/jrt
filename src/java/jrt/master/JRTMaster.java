@@ -38,6 +38,19 @@ import jrt.slave.JRTSlave;
  */
 
 public class JRTMaster extends HttpServlet {
+    private JRTSlave slave;
+    private boolean connected;
+    private Scanner scanner;
+    private String cmd, path;
+    
+    @Override
+    public void init() {
+        slave = null;
+        connected = false;
+        scanner = new Scanner(System.in);
+        path = null;
+    }
+    
     /**
      * It creates a connection between this master and a specified slave
      * @param ipAddr slave's IP address
@@ -45,7 +58,7 @@ public class JRTMaster extends HttpServlet {
      * @return a slave object or null if there was an error during connection
      */
 
-    private static JRTSlave connect(String ipAddr, int port) {
+    private JRTSlave connect(String ipAddr, int port) {
         try {
             return (JRTSlave)Naming.lookup("//" + ipAddr + ":" + port + "/RemoteTerminal");
         } catch(NotBoundException | MalformedURLException | RemoteException ex) {
@@ -53,7 +66,7 @@ public class JRTMaster extends HttpServlet {
         }
     }
     
-    private static String[] executeCommand(JRTSlave slave, String cmd, String path) {
+    private String[] executeCommand(JRTSlave slave, String cmd, String path) {
         try {
             if(path == null || path.equals("") == true)
                 return slave.executeCommand("cmd /c " + cmd);
@@ -66,112 +79,109 @@ public class JRTMaster extends HttpServlet {
         }
     }
     
-    private static String pwd(JRTSlave slave, String path) {
+    private String pwd(JRTSlave slave, String path) {
         String pwd = executeCommand(slave, "echo %cd%", path)[0];
         return pwd.trim();
     }
     
     public static void main(String []args){
         // Checking command line input
-        if(args.length != 0) {
-            System.out.println("This program needs no command line arguments");
+        /*if(args.length != 0) {
+            response.getWriter().write("This program needs no command line arguments");
             return;
         }
         
-        JRTSlave slave = null;
-        boolean connected = false;
-        Scanner scanner = new Scanner(System.in);
-        String cmd, path = null;
-        
-        System.out.println("Master program started");
+        response.getWriter().write("Master program started");
         
         while(true) {
-            if(connected == true && slave != null)
-                System.out.print(pwd(slave, path));
-            System.out.print("> ");
-            cmd = scanner.nextLine();
             
-            String[] splitted = cmd.split("\\s+");
-            
-            switch(splitted[0]) {
-                case "connect":
-                    if(connected == true) {
-                        System.out.println(
-                            "You already connected to a slave.\n" +
-                            "You can create a new tab above to connect to multiple slaves"
-                        );
-                        break;
-                    }
-                    if(splitted.length != 3) {
-                        System.out.println(
-                            "Usage: connect <ip_address> <port>"
-                        );
-                        break;
-                    }
-                    if(Long.parseLong(splitted[2]) > 65535 || Long.parseLong(splitted[2]) < 0) {
-                        System.out.println("Invalid port number");
-                        break;
-                    }
-                    slave = connect(splitted[1], Integer.parseInt(splitted[2]));
-                    if(slave == null) {
-                        System.out.println("Something was wrong with the parameters: please, try again");
-                        break;
-                    }
-                    System.out.println("Connection established successfully!");
-                    connected = true;
-                    break;
-                
-                case "help":
-                    System.out.println(
-                        "Commands list:\n" +
-                        "connect <ip_address> <port>\tConnects to the slave\n" +
-                        "quit\t\t\t\tCloses a connection\n" +
-                        "<command>\t\t\tIf connected, sends a command to the slave\n" +
-                        "help\t\t\t\tPrints this help message\n" +
-                        "exit\t\t\t\tTerminates this program"
-                    );
-                    break;
-                    
-                case "quit":
-                    if(connected == false) {
-                        System.out.println("You can only quit a connection after you have established one first");
-                        break;
-                    }
-                    connected = false;
-                    slave = null;
-                    
-                    break;
-                    
-                case "exit":
-                    System.out.println("Terminating master program...");
-                    return;
-                
-                // Commands
-                default:
-                    if(connected == false) {
-                        System.out.println(
-                            "Before typing a command, you must connect to a slave first:" +
-                            "use the connect <ip_address> <port> command"
-                        );
-                        break;
-                    }
-                    
-                    String[] result = executeCommand(slave, cmd, path);
-                    System.out.println((result == null) ? "Command unsupported" : result[0]);
-                    path = result[1];
-                    
-                    break;
-            }
-        }
+        }*/
     }
     
+    
+    
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
-        throws ServletException, IOException {
-        
-        String text = "Response: " + request.getParameter("command");
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(text);
+        
+        if(connected == true && slave != null)
+            response.getWriter().write(pwd(slave, path));
+        response.getWriter().write("> ");
+        cmd = request.getParameter("command");
+
+        String[] splitted = cmd.split("\\s+");
+
+        switch(splitted[0]) {
+            case "connect":
+                if(connected == true) {
+                    response.getWriter().write(
+                        "You already connected to a slave.\n" +
+                        "You can create a new tab above to connect to multiple slaves"
+                    );
+                    break;
+                }
+                if(splitted.length != 3) {
+                    response.getWriter().write(
+                        "Usage: connect <ip_address> <port>"
+                    );
+                    break;
+                }
+                if(Long.parseLong(splitted[2]) > 65535 || Long.parseLong(splitted[2]) < 0) {
+                    response.getWriter().write("Invalid port number");
+                    break;
+                }
+                slave = connect(splitted[1], Integer.parseInt(splitted[2]));
+                if(slave == null) {
+                    response.getWriter().write("Something was wrong with the parameters: please, try again");
+                    break;
+                }
+                response.getWriter().write("Connection established successfully!");
+                connected = true;
+                break;
+
+            case "help":
+                response.getWriter().write(
+                    "Commands list:\n" +
+                    "connect <ip_address> <port>\tConnects to the slave\n" +
+                    "quit\t\t\t\tCloses a connection\n" +
+                    "<command>\t\t\tIf connected, sends a command to the slave\n" +
+                    "help\t\t\t\tPrints this help message\n" +
+                    "exit\t\t\t\tTerminates this program"
+                );
+                break;
+
+            case "quit":
+                if(connected == false) {
+                    response.getWriter().write("You can only quit a connection after you have established one first");
+                    break;
+                }
+                connected = false;
+                slave = null;
+
+                break;
+
+            case "exit":
+                response.getWriter().write("Terminating master program...");
+                return;
+
+            // Commands
+            default:
+                if(connected == false) {
+                    response.getWriter().write(
+                        "Before typing a command, you must connect to a slave first:" +
+                        "use the connect <ip_address> <port> command"
+                    );
+                    break;
+                }
+
+                String[] result = executeCommand(slave, cmd, path);
+                response.getWriter().write((result == null) ? "Command unsupported" : result[0]);
+                path = result[1];
+
+                break;
+        }
+        
+        //response.getWriter().write("prova");
     }
 }
