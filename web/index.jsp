@@ -12,8 +12,8 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script>
             $(document).on("click", "#somebutton", function() {
-                $.get("JRTweb", function(responseText) {   // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-                    $("#somediv").text(responseText);           // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
+                $.get("JRTweb", function(responseText) {    // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                    $("#somediv").text(responseText);       // Locate HTML DOM element with ID "somediv" and set its text content with the response text.
                 });
             });
         </script>

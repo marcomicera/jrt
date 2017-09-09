@@ -17,6 +17,7 @@
 
 package jrt.master;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -24,6 +25,10 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import jrt.slave.JRTSlave;
 
 /**
@@ -31,7 +36,7 @@ import jrt.slave.JRTSlave;
  * @author Marco Micera, Leonardo Bernardi
  */
 
-public class JRTMaster {
+public class JRTMaster extends HttpServlet {
     /**
      * It creates a connection between this master and a specified slave
      * @param ipAddr slave's IP address
@@ -157,5 +162,15 @@ public class JRTMaster {
                     break;
             }
         }
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {
+        
+        String text = "some text";
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(text);
     }
 }
