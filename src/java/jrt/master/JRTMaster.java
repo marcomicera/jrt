@@ -105,9 +105,8 @@ public class JRTMaster extends HttpServlet {
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         
-        if(connected == true && slave != null)
-            response.getWriter().write(pwd(slave, path));
-        response.getWriter().write("> ");
+        
+        //response.getWriter().write("> ");
         cmd = request.getParameter("command");
 
         String[] splitted = cmd.split("\\s+");
@@ -183,5 +182,7 @@ public class JRTMaster extends HttpServlet {
         }
         
         //response.getWriter().write("prova");
+        if(connected == true && slave != null)
+            response.getWriter().write(pwd(slave, path));
     }
 }
