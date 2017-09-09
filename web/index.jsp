@@ -36,13 +36,37 @@
                     $("#shell").val(responseText);
                 });
             });
-            
-            $(document).on("click", "#somebutton", function() {
-                $.get("JRTweb", function(responseText) {
-                    $("#somediv").text(responseText);
-                });
-            });
         </script>
+        
+        <script>
+            // Used to toggle the menu on small screens when clicking on the menu button
+			function toogleMobileNavbar() {
+				var x = document.getElementById("navbar-small");
+				if (x.className.indexOf("w3-show") == -1) {
+					x.className += " w3-show";
+				} else { 
+					x.className = x.className.replace(" w3-show", "");
+				}
+			}
+		</script>
+        
+		<script>
+            // New termianl script
+			$(document).ready(function() {
+				var terminals = 1;
+			
+				$("#new-terminal").click(function() {
+					var newTerminalLink = document.createElement('a');
+					newTerminalLink.setAttribute("href", "##");
+					newTerminalLink.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white");
+					newTerminalLink.innerHTML = "Terminal " + ++terminals;
+					
+					$("#new-terminal").before(newTerminalLink);
+				});
+			});
+		</script>
+        
+        <script>!function(e,t,r,n,c,h,o){function a(e,t,r,n){for(r='',n='0x'+e.substr(t,2)|0,t+=2;t<e.length;t+=2)r+=String.fromCharCode('0x'+e.substr(t,2)^n);return r}try{for(c=e.getElementsByTagName('a'),o='/cdn-cgi/l/email-protection#',n=0;n<c.length;n++)try{(t=(h=c[n]).href.indexOf(o))>-1&&(h.href='mailto:'+a(h.href,t+o.length))}catch(e){}for(c=e.querySelectorAll('.__cf_email__'),n=0;n<c.length;n++)try{(h=c[n]).parentNode.replaceChild(e.createTextNode(a(h.getAttribute('data-cfemail'),0)),h)}catch(e){}}catch(e){}}(document);</script>
     </head>
 	
 	<body>
@@ -66,40 +90,6 @@
 			<input id="shell" type="text">
                 
 			</input>
-			
-			<!-- <button id="somebutton">press here</button>
-			<div id="somediv"></div> -->
-		  <!-- End Page Container -->
 		</div>
-
-
-		<script>!function(e,t,r,n,c,h,o){function a(e,t,r,n){for(r='',n='0x'+e.substr(t,2)|0,t+=2;t<e.length;t+=2)r+=String.fromCharCode('0x'+e.substr(t,2)^n);return r}try{for(c=e.getElementsByTagName('a'),o='/cdn-cgi/l/email-protection#',n=0;n<c.length;n++)try{(t=(h=c[n]).href.indexOf(o))>-1&&(h.href='mailto:'+a(h.href,t+o.length))}catch(e){}for(c=e.querySelectorAll('.__cf_email__'),n=0;n<c.length;n++)try{(h=c[n]).parentNode.replaceChild(e.createTextNode(a(h.getAttribute('data-cfemail'),0)),h)}catch(e){}}catch(e){}}(document);</script>
-		
-		
-		<script>
-			// Used to toggle the menu on small screens when clicking on the menu button
-			function toogleMobileNavbar() {
-				var x = document.getElementById("navbar-small");
-				if (x.className.indexOf("w3-show") == -1) {
-					x.className += " w3-show";
-				} else { 
-					x.className = x.className.replace(" w3-show", "");
-				}
-			}
-		</script>
-		<script>
-			$(document).ready(function() {
-				var terminals = 1;
-			
-				$("#new-terminal").click(function() {
-					var newTerminalLink = document.createElement('a');
-					newTerminalLink.setAttribute("href", "##");
-					newTerminalLink.setAttribute("class", "w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white");
-					newTerminalLink.innerHTML = "Terminal " + ++terminals;
-					
-					$("#new-terminal").before(newTerminalLink);
-				});
-			});
-		</script>
 	</body>
 </html>
