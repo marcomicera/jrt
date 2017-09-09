@@ -1033,7 +1033,8 @@
                                        type:'get',
                                        cache:false,
                                        success:function(data){
-                                          $(".content")[0].append(data);
+                                          //$(".content")[0].append(data);
+                                          $(data).appendTo(".content")[0];
                                        },
                                        error:function(){
                                          alert('error');

@@ -18,6 +18,7 @@
 package jrt.master;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -87,26 +88,36 @@ public class JRTMaster extends HttpServlet {
     public static void main(String []args){
         // Checking command line input
         /*if(args.length != 0) {
-            response.getWriter().write("This program needs no command line arguments");
+            print(writer, "This program needs no command line arguments");
             return;
         }
         
-        response.getWriter().write("Master program started");
+        print(writer, "Master program started");
         
         while(true) {
             
         }*/
     }
     
-    
+    private void print(PrintWriter writer, String text) {
+        // String processing
+        text = text.replaceAll("<", "&lt;");
+        text = text.replaceAll(">", "&gt;");
+        text = text.replaceAll("\n", "<br />");
+        text = text.replaceAll("\t", "&#9;");
+        text = "<p>" + text + "</p>";
+        
+        // Actual printing
+        writer.println(text);
+    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/plain");
+        response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
+        PrintWriter writer = response.getWriter();
         
-        
-        //response.getWriter().write("> ");
+        //print(writer, "> ");
         cmd = request.getParameter("command");
 
         String[] splitted = cmd.split("\\s+");
@@ -114,35 +125,35 @@ public class JRTMaster extends HttpServlet {
         switch(splitted[0]) {
             case "connect":
                 if(connected == true) {
-                    response.getWriter().write(
+                    print(writer, 
                         "You already connected to a slave.\n" +
                         "You can create a new tab above to connect to multiple slaves"
                     );
                     break;
                 }
                 if(splitted.length != 3) {
-                    response.getWriter().write(
+                    print(writer, 
                         "Usage: connect <ip_address> <port>"
                     );
                     break;
                 }
                 if(Long.parseLong(splitted[2]) > 65535 || Long.parseLong(splitted[2]) < 0) {
-                    response.getWriter().write("Invalid port number");
+                    print(writer, "Invalid port number");
                     break;
                 }
                 slave = connect(splitted[1], Integer.parseInt(splitted[2]));
                 if(slave == null) {
-                    response.getWriter().write("Something was wrong with the parameters: please, try again");
+                    print(writer, "Something was wrong with the parameters: please, try again");
                     break;
                 }
-                response.getWriter().write("Connection established successfully!");
+                print(writer, "Connection established successfully!");
                 connected = true;
                 break;
 
             case "help":
-                response.getWriter().write(
-                    "Commands list:\n" +
-                    "connect <ip_address> <port>\tConnects to the slave\n" +
+                print(writer, 
+                    "Commands list:\n" + 
+                    "connect &lt;ip_address&gt; &lt;port&gt;\tConnects to the slave\n" +
                     "quit\t\t\t\tCloses a connection\n" +
                     "<command>\t\t\tIf connected, sends a command to the slave\n" +
                     "help\t\t\t\tPrints this help message\n" +
@@ -152,7 +163,7 @@ public class JRTMaster extends HttpServlet {
 
             case "quit":
                 if(connected == false) {
-                    response.getWriter().write("You can only quit a connection after you have established one first");
+                    print(writer, "You can only quit a connection after you have established one first");
                     break;
                 }
                 connected = false;
@@ -161,13 +172,13 @@ public class JRTMaster extends HttpServlet {
                 break;
 
             case "exit":
-                response.getWriter().write("Terminating master program...");
+                print(writer, "Terminating master program...");
                 return;
 
             // Commands
             default:
                 if(connected == false) {
-                    response.getWriter().write(
+                    print(writer, 
                         "Before typing a command, you must connect to a slave first:" +
                         "use the connect <ip_address> <port> command"
                     );
@@ -175,13 +186,13 @@ public class JRTMaster extends HttpServlet {
                 }
 
                 String[] result = executeCommand(slave, cmd, path);
-                response.getWriter().write((result == null) ? "Command unsupported" : result[0]);
+                print(writer, (result == null) ? "Command unsupported" : result[0]);
                 path = result[1];
                 break;
         }
         
-        //response.getWriter().write("prova");
+        //print(writer, "prova");
         if(connected == true && slave != null)
-            response.getWriter().write(pwd(slave, path));
+            response.getWriter().print(pwd(slave, path));
     }
 }
