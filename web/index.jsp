@@ -3,9 +3,9 @@
     <head>
         <title>JRT web app</title>
         <meta charset="UTF-8">
-        <meta name=?description? content=?Marco Micera's personal website: Curriculum, notes and projects.? />
-        <meta name=?robots? content=?noodp? />
-        <meta name=?keywords? content=?marco, micera, unipi, polito, marcomicera, computer, engineering, ingegneria, informatica? />
+        <meta name="description" content="Java Remote Terminal: web applicaton" />
+        <meta name="robots" content="noodp" />
+        <meta name="keywords" content="java, remote, terminal, jrt, jrtweb, project, bernardi, micera, marco, leonardo, leonardo bernardi, marco micera" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- <link rel="shortcut icon" type="image/png" href="media/logo/16.png"/> -->
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
