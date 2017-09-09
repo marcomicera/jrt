@@ -156,7 +156,7 @@
                             theme        : 'boring',
 
                             // Register help, clear and history commands
-                            native_cmds  : true,
+                            native_cmds  : false,
 
                             // Is Autocomplete feature Enabled
                             autocomplete : true,
@@ -367,7 +367,7 @@
                                 }
                             });
 
-                            /*public.register('command',{
+                            public.register('command',{
                                     name : 'history',
                                     method : function(cmd) {
                                         if(cmd.hasOwnProperty('clear')){
@@ -385,9 +385,9 @@
                                     },
                                     options : ['clear'],
                                     help : 'Shows list of typed in commands. Type <i>history clear</i> to clear your history.'
-                            });*/
+                            });
 
-                            /*public.register('command', {
+                            public.register('command', {
                                     name : 'help',
                                     method : function(cmd) {
                                         if(typeof cmd[1] === 'string' && cmd[1].length > 0){
@@ -422,7 +422,7 @@
                                     help : 'Displays a list of useful information. Usage: '+
                                     '<i>help command-name</i> to show <i>command-name</i>\'s help.'+
                                     '<i>help -a</i> or <i>help --all</i> to display all help.'
-                            });*/
+                            });
                         };
 
                         /**
