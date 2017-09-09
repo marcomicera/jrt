@@ -23,7 +23,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,20 +84,6 @@ public class JRTMaster extends HttpServlet {
         return pwd.trim();
     }
     
-    public static void main(String []args){
-        // Checking command line input
-        /*if(args.length != 0) {
-            print(writer, "This program needs no command line arguments");
-            return;
-        }
-        
-        print(writer, "Master program started");
-        
-        while(true) {
-            
-        }*/
-    }
-    
     private void print(PrintWriter writer, String text) {
         // String processing
         text = text.replaceAll("<", "&lt;");
@@ -108,7 +93,7 @@ public class JRTMaster extends HttpServlet {
         text = "<pre class=\"response\">" + text + "</pre>";
         
         // Actual printing
-        writer.println(text);
+        writer.println(text + ";;;" + path);
     }
     
     @Override
@@ -146,6 +131,8 @@ public class JRTMaster extends HttpServlet {
                     print(writer, "Something was wrong with the parameters: please, try again");
                     break;
                 }
+                path = pwd(slave, "./");
+                
                 print(writer, "Connection established successfully!");
                 connected = true;
                 break;
@@ -186,13 +173,9 @@ public class JRTMaster extends HttpServlet {
                 }
 
                 String[] result = executeCommand(slave, cmd, path);
-                print(writer, (result == null) ? "Command unsupported" : result[0]);
                 path = result[1];
+                print(writer, (result == null) ? "Command unsupported" : result[0]);
                 break;
         }
-        
-        //print(writer, "prova");
-        if(connected == true && slave != null)
-            response.getWriter().print(pwd(slave, path));
     }
 }

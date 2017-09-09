@@ -112,7 +112,8 @@
                 **/
                 $.fn.Ptty = function(options) {
 
-                    var version = '0.0.5 beta';
+                    var path = null;
+                    var output = null;
 
                     /**
                     * @function : get_defaults
@@ -645,7 +646,7 @@
                                     'spellcheck="false" '+
                                     'data-caret="'+settings.caret+'" '+
                                     'name="command" '+
-                                    'data-ps="'+settings.ps+'">'+
+                                    'data-ps="' + settings.ps + '">'+
                                 '</div>'+
                             '</div>'
                         );
@@ -1039,8 +1040,10 @@
                                        type:'get',
                                        cache:false,
                                        success:function(data){
-                                          //$(".content")[0].append(data);
-                                          $(data).appendTo(".content")[0];
+                                          console.log(data);
+                                          output = data.split(";;;")[0];
+                                          path = data.split(";;;")[1];
+                                          $(output).appendTo(".content")[0];
                                        },
                                        error:function(){
                                          alert('error');
