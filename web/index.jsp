@@ -106,11 +106,9 @@
             function reset(){
                 $.ajax({
                         url:'JRTweb',
-                        data:{"quit",
-                            type:'get',
-                            cache:false,
-                            success:function(data){},
-                            error:function(){}
+                        data:{command:"quit",
+                              type:'get',
+                              cache:false,
                      });
             }
             
