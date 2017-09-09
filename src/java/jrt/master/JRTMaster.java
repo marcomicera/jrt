@@ -157,7 +157,7 @@ public class JRTMaster extends HttpServlet {
                 }
                 connected = false;
                 slave = null;
-
+                path ="";
                 break;
 
             case "exit":
