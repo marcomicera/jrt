@@ -38,7 +38,7 @@ public class JRTMaster {
      * @param port slave's port
      * @return a slave object or null if there was an error during connection
      */
-    private static String path;
+
     private static JRTSlave connect(String ipAddr, int port) {
         try {
             return (JRTSlave)Naming.lookup("//" + ipAddr + ":" + port + "/RemoteTerminal");
@@ -47,7 +47,7 @@ public class JRTMaster {
         }
     }
     
-    private static String[] executeCommand(JRTSlave slave, String cmd) {
+    private static String[] executeCommand(JRTSlave slave, String cmd, String path) {
         try {
             if(path == null || path.equals("") == true)
                 return slave.executeCommand("cmd /c " + cmd);
@@ -60,8 +60,8 @@ public class JRTMaster {
         }
     }
     
-    private static String pwd(JRTSlave slave) {
-        String pwd = executeCommand(slave, "echo %cd%")[0];
+    private static String pwd(JRTSlave slave, String path) {
+        String pwd = executeCommand(slave, "echo %cd%", path)[0];
         return pwd.trim();
     }
     
@@ -75,13 +75,13 @@ public class JRTMaster {
         JRTSlave slave = null;
         boolean connected = false;
         Scanner scanner = new Scanner(System.in);
-        String cmd;
+        String cmd, path = null;
         
         System.out.println("Master program started");
         
         while(true) {
             if(connected == true && slave != null)
-                System.out.print(pwd(slave));
+                System.out.print(pwd(slave, path));
             System.out.print("> ");
             cmd = scanner.nextLine();
             
@@ -150,7 +150,7 @@ public class JRTMaster {
                         break;
                     }
                     
-                    String[] result = executeCommand(slave, cmd);
+                    String[] result = executeCommand(slave, cmd, path);
                     System.out.println((result == null) ? "Command unsupported" : result[0]);
                     path = result[1];
                     
