@@ -168,7 +168,7 @@ public class JRTMaster extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException {
         
-        String text = "some text";
+        String text = "Master program started\n> ";
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(text);
