@@ -145,7 +145,7 @@
                             param        : 'cmd',
 
                             // The Primary Prompt (it's better to edit this using css)
-                            ps           : '$',
+                            ps           : '>',
 
                             // Caret (the cursor)
                             caret        : '\u25ae', // Black Vertical Rectangle ?
@@ -176,7 +176,7 @@
                             // Language
                             i18n : {
                                 // Message to be shown when the terminal is first 
-                                welcome : 'Ptty ('+version+').<br> Type <b>help</b> to list the available commands.',
+                                welcome : 'Master program started\n',
                                 // When command is not found: "CMD" will be replaced
                                 error_not_found : 'Command not found.',
                                 // If command method is not valid
