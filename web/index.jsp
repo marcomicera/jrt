@@ -1042,8 +1042,9 @@
                                        success:function(data){
                                           console.log(data);
                                           output = data.split(";;;")[0];
-                                          path = data.split(";;;")[1];
+                                          path = data.split(";;;")[1].trim();
                                           $(output).appendTo(".content")[0];
+                                          $("#terminal div.prompt div.input")[0].setAttribute("data-ps", path.concat(">"));
                                        },
                                        error:function(){
                                          alert('error');
