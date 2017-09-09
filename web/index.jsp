@@ -30,13 +30,6 @@
 				-webkit-text-fill-color: white;
 			}
         </style>
-        <script>
-            /*$(function() {
-                $.get("JRTweb", function(responseText) {
-                    $(".shell").val(responseText);
-                });
-            });*/
-        </script>
         
         <script>
             // Used to toggle the menu on small screens when clicking on the menu button
@@ -648,8 +641,7 @@
                                     'name="command" '+
                                     'data-ps="'+settings.ps+'">'+
                                 '</div>'+
-                            '</div>'+
-                            '<form style="display:none; method="POST"><input name="command"></form>'
+                            '</div>'
                         );
 
                         var input   = el.find('.prompt .input');
@@ -740,8 +732,8 @@
                             if(typeof commands[cmd_name] !== 'undefined'){
                                 cmd_obj = public.tokenize(cmd, commands[cmd_name].options);
                             }else{
-                                if(!quiet){
-                                    cmd_opts.out = cmd_name+' : '+settings.i18n.error_not_found;    
+                                if(!quiet){ 
+                                    // cmd_opts.out = cmd_name+' : '+settings.i18n.error_not_found;    
                                 }
                                 return cmd_update();
                             }
@@ -1035,13 +1027,21 @@
                                     e.preventDefault();
                                     document.execCommand('insertHTML', false, '');
                                     
-                                    $("form input")[0].setAttribute("value", $(".prompt")[0].outerText);
-                                    
-                                    $.get("JRTweb", function(responseText, cmd) {
-                                        $(".content")[0].append(responseText);
+                                    $.ajax({
+                                       url:'JRTweb',
+                                       data:{command: $(".prompt")[0].outerText},
+                                       type:'get',
+                                       cache:false,
+                                       success:function(data){
+                                          //alert(data);
+                                          $(".content")[0].append(data);
+                                       },
+                                       error:function(){
+                                         alert('error');
+                                       }
                                     });
                 
-                                    //cmd_start();
+                                    cmd_start();
                                     
                                     break;
                                 // Escape key
