@@ -40,15 +40,17 @@ import jrt.slave.JRTSlave;
 public class JRTMaster extends HttpServlet {
     private JRTSlave slave;
     private boolean connected;
-    private Scanner scanner;
     private String cmd, path;
     
     @Override
     public void init() {
         slave = null;
         connected = false;
-        scanner = new Scanner(System.in);
         path = null;
+    }
+    
+    @Override
+    public void destroy() {
     }
     
     /**
