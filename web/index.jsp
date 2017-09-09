@@ -99,7 +99,7 @@
                 
 			</textarea> -->
             
-            <!-- Ptty -->
+            <!-- Ptty --> <!-- si prende il valore del terminal con $(".prompt")[0].outerText -->
             <div id="terminal"></div>
             <script>$(document).ready(function(){ var $ptty = $('#terminal').Ptty(); });</script>
 		</div>
