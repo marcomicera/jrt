@@ -32,6 +32,8 @@
             
             .response {
                 margin: 5px 0px 17px 0px;
+                font-family: "Courier New", Courier, monospace;
+                font-size: 15px;
             }
         </style>
         

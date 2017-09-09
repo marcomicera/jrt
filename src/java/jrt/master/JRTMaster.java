@@ -105,7 +105,7 @@ public class JRTMaster extends HttpServlet {
         text = text.replaceAll(">", "&gt;");
         text = text.replaceAll("\n", "<br />");
         text = text.replaceAll("\t", "&emsp;");
-        text = "<p class=\"response\">" + text + "</p>";
+        text = "<pre class=\"response\">" + text + "</pre>";
         
         // Actual printing
         writer.println(text);
@@ -153,11 +153,11 @@ public class JRTMaster extends HttpServlet {
             case "help":
                 print(writer, 
                     "Commands list:\n" + 
-                    "connect &lt;ip_address&gt; &lt;port&gt;\tConnects to the slave\n" +
-                    "quit\t\t\t\tCloses a connection\n" +
-                    "<command>\t\t\tIf connected, sends a command to the slave\n" +
-                    "help\t\t\t\tPrints this help message\n" +
-                    "exit\t\t\t\tTerminates this program"
+                    "connect &lt;ip_address&gt; &lt;port&gt;   Connects to the slave\n" +
+                    "quit                          Closes a connection\n" +
+                    "<command>                     If connected, sends a command to the slave\n" +
+                    "help                          Prints this help message\n" +
+                    "exit                          Terminates this program"
                 );
                 break;
 
