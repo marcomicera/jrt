@@ -22,7 +22,7 @@
 				background: black;
 			}
 			
-			#shell {
+			.shell {
 				font-family: monospace;
 				width:100%;
 				background: black;
@@ -33,7 +33,7 @@
         <script>
             $(function() {
                 $.get("JRTweb", function(responseText) {
-                    $("#shell").val(responseText);
+                    $(".shell").val(responseText);
                 });
             });
         </script>
@@ -88,15 +88,20 @@
 		<!-- Page Container -->
 		<div class="w3-content" style="max-width:1400px; margin-top:51px;">
 			<!-- My shell -->
-            <!-- <textarea id="shell" type="text" rows="15" class="w3-padding-large" autofocus>
+            <!-- <textarea 
+                class="shell w3-padding-large" 
+                id="initial-message" 
+                type="text" 
+                rows="15" 
+                autofocus 
+                spellcheck="false"
+            >
                 
 			</textarea> -->
             
             <!-- Ptty -->
             <div id="terminal"></div>
-            <script>
-                $(document).ready(function(){ var $ptty = $('#terminal').Ptty(); });
-            </script>
+            <script>$(document).ready(function(){ var $ptty = $('#terminal').Ptty(); });</script>
 		</div>
         
         <!-- Huge Ptty code -->
