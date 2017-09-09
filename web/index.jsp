@@ -108,8 +108,9 @@
                         url:'JRTweb',
                         data:{command:"quit",
                               type:'get',
-                              cache:false,
-                     });
+                              cache:false
+                             }
+                         });
             }
             
             ( function( $ ) {
