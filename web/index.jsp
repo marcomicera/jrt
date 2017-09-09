@@ -88,9 +88,9 @@
 		<!-- Page Container -->
 		<div class="w3-content" style="max-width:1400px; margin-top:51px;">
 			<!-- Shell -->
-            <input id="shell" type="text">
+            <textarea id="shell" type="text" rows="15" class="w3-padding-large" autofocus>
                 
-			</input>
+			</textarea>
 		</div>
 	</body>
 </html>
