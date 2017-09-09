@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -168,7 +169,7 @@ public class JRTMaster extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException {
         
-        String text = "Master program started\n> ";
+        String text = "Response: " + request.getParameter("command");
         response.setContentType("text/plain");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(text);

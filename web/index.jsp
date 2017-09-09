@@ -31,11 +31,11 @@
 			}
         </style>
         <script>
-            $(function() {
+            /*$(function() {
                 $.get("JRTweb", function(responseText) {
                     $(".shell").val(responseText);
                 });
-            });
+            });*/
         </script>
         
         <script>
@@ -87,21 +87,9 @@
 
 		<!-- Page Container -->
 		<div class="w3-content" style="max-width:1400px; margin-top:51px;">
-			<!-- My shell -->
-            <!-- <textarea 
-                class="shell w3-padding-large" 
-                id="initial-message" 
-                type="text" 
-                rows="15" 
-                autofocus 
-                spellcheck="false"
-            >
-                
-			</textarea> -->
-            
             <!-- Ptty --> <!-- si prende il valore del terminal con $(".prompt")[0].outerText -->
-            <div id="terminal"></div>
-            <script>$(document).ready(function(){ var $ptty = $('#terminal').Ptty(); });</script>
+            <div id="terminal"></div> <!-- Ptty terminal -->
+            <script>$(document).ready(function(){ var $ptty = $('#terminal').Ptty(); });</script> <!-- Creates Ptty terminal windows -->
 		</div>
         
         <!-- Huge Ptty code -->
@@ -657,9 +645,11 @@
                                 '<div class="input" contenteditable '+
                                     'spellcheck="false" '+
                                     'data-caret="'+settings.caret+'" '+
+                                    'name="command" '+
                                     'data-ps="'+settings.ps+'">'+
                                 '</div>'+
-                            '</div>'
+                            '</div>'+
+                            '<form style="display:none; method="POST"><input name="command"></form>'
                         );
 
                         var input   = el.find('.prompt .input');
@@ -1044,7 +1034,15 @@
                                 case 13:
                                     e.preventDefault();
                                     document.execCommand('insertHTML', false, '');
-                                    cmd_start(); // important!
+                                    
+                                    $("form input")[0].setAttribute("value", $(".prompt")[0].outerText);
+                                    
+                                    $.get("JRTweb", function(responseText, cmd) {
+                                        $(".content")[0].append(responseText);
+                                    });
+                
+                                    //cmd_start();
+                                    
                                     break;
                                 // Escape key
                                 case 27:
@@ -1053,7 +1051,7 @@
                                         last : null, next : null, data : null
                                     };
                                     input.text('');
-                                    cmd_start();
+                                    //cmd_start();
                                     break;
 
                             }

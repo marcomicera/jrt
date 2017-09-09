@@ -5,6 +5,7 @@
         <servlet-class>jrt.master.JRTMaster</servlet-class>
     </servlet>
 
+    <!-- Servlet/URL mappings -->
     <servlet-mapping>
         <servlet-name>JRTweb</servlet-name>
         <url-pattern>/JRTweb/*</url-pattern>
