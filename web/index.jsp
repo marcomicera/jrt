@@ -30,8 +30,8 @@
 				-webkit-text-fill-color: white;
 			}
             
-            #response {
-                
+            .response {
+                margin: 5px 0px 17px 0px;
             }
         </style>
         
