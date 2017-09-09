@@ -17,6 +17,18 @@
             body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
             .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
             .fa-anchor,.fa-coffee {font-size:200px}
+			
+			body {
+				background: black;
+			}
+			
+			#shell {
+				font-family: monospace;
+				width:100%;
+				background: black;
+				border: black;
+				-webkit-text-fill-color: white;
+			}
         </style>
         <script>
             $(document).on("click", "#somebutton", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
@@ -27,7 +39,7 @@
         </script>
     </head>
 	
-	<body class="w3-black">
+	<body>
 
 		<!-- Navbar -->
 		<div class="w3-top" style="z-index: 10;">
@@ -44,12 +56,13 @@
 		</div>
 
 		<!-- Page Container -->
-		<div class="w3-content w3-padding" style="max-width:1400px; margin-top:70px;">
-			<div id="shell" style="font-family: monospace;">
-                > prova shell
-                <button id="somebutton">press here</button>
-                <div id="somediv"></div>
-			</div>
+		<div class="w3-content" style="max-width:1400px; margin-top:51px;">
+			<input id="shell" type="text">
+                
+			</input>
+			
+			<!-- <button id="somebutton">press here</button>
+			<div id="somediv"></div> -->
 		  <!-- End Page Container -->
 		</div>
 
