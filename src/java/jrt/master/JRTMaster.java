@@ -105,7 +105,7 @@ public class JRTMaster extends HttpServlet {
         text = text.replaceAll(">", "&gt;");
         text = text.replaceAll("\n", "<br />");
         text = text.replaceAll("\t", "&#9;");
-        text = "<p>" + text + "</p>";
+        text = "<p id=\"response\">" + text + "</p>";
         
         // Actual printing
         writer.println(text);

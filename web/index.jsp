@@ -29,6 +29,10 @@
 				border: black;
 				-webkit-text-fill-color: white;
 			}
+            
+            #response {
+                
+            }
         </style>
         
         <script>
