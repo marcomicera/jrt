@@ -7,6 +7,6 @@
 
     <servlet-mapping>
         <servlet-name>JRTweb</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/JRTweb/*</url-pattern>
     </servlet-mapping>
 </web-app>
