@@ -70,24 +70,25 @@
     </head>
 	
 	<body>
-
-		<!-- Navbar -->
+		<!-- Navbars -->
 		<div class="w3-top" style="z-index: 10;">
-		  <div id="navbar-large" class="w3-bar w3-blue-gray w3-card-2 w3-left-align w3-large">
-			<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue-gray" href="javascript:void(0);" onclick="toogleMobileNavbar()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
-			<a href="##" class="w3-bar-item w3-button w3-padding-large w3-white">Terminal 1</a>
-			<a id="new-terminal" href="javascript:void(0);"  class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">+</a>
-		  </div>
+            <!-- Navbar on large screens -->
+            <div id="navbar-large" class="w3-bar w3-blue-gray w3-card-2 w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-blue-gray" href="javascript:void(0);" onclick="toogleMobileNavbar()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+                <a href="##" class="w3-bar-item w3-button w3-padding-large w3-white">Terminal 1</a>
+                <a id="new-terminal" href="javascript:void(0);"  class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white">+</a>
+            </div>
 
-		  <!-- Navbar on small screens -->
-		  <div id="navbar-small" class="w3-bar-block w3-blue-gray w3-hide w3-hide-large w3-hide-medium w3-large">
-			<a id="new-terminal" href="javascript:void(0);" target="_blank" class="w3-bar-item w3-button w3-padding-large">+</a>
-		  </div>
+            <!-- Navbar on small screens -->
+            <div id="navbar-small" class="w3-bar-block w3-blue-gray w3-hide w3-hide-large w3-hide-medium w3-large">
+    			<a id="new-terminal" href="javascript:void(0);" target="_blank" class="w3-bar-item w3-button w3-padding-large">+</a>
+            </div>
 		</div>
 
 		<!-- Page Container -->
 		<div class="w3-content" style="max-width:1400px; margin-top:51px;">
-			<input id="shell" type="text">
+			<!-- Shell -->
+            <input id="shell" type="text">
                 
 			</input>
 		</div>
