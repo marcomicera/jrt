@@ -177,7 +177,6 @@ public class JRTMaster extends HttpServlet {
                 String[] result = executeCommand(slave, cmd, path);
                 response.getWriter().write((result == null) ? "Command unsupported" : result[0]);
                 path = result[1];
-
                 break;
         }
         
