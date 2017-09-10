@@ -83,7 +83,7 @@ public class JRTDispatcher extends UnicastRemoteObject implements JRTSlave {
 
     @Override
     public String[] executeCommand(String cmd, String id) throws RemoteException {
-        return executeCommand(cmd, id, "./");
+        return executeCommand(cmd, "./", id);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class JRTDispatcher extends UnicastRemoteObject implements JRTSlave {
         if(!slaves.containsKey(id))
             slaves.put(id, new JRTSlaveImpl());
         
-        return slaves.get(id).executeCommand(cmd, path);
+        return slaves.get(id).executeCommand(cmd, path, id);
     }
     
     @Override

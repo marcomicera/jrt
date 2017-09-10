@@ -48,8 +48,8 @@ public class JRTSlaveImpl {
      * @param cmd command to be executed
      * @return the command output
      */
-    public String[] executeCommand(String cmd, String path) {
-        System.out.println("Server has requested the " + cmd + " command. Replying...");        
+    public String[] executeCommand(String cmd, String path, String id) {
+        System.out.println("Server " + id + " has requested the " + cmd + " command. Replying...");        
         
         StringBuffer output = new StringBuffer();
 
@@ -83,7 +83,7 @@ public class JRTSlaveImpl {
         return arrayOutput;
     }
     
-    public String[] executeCommand(String cmd) {
-        return executeCommand(cmd,"./");
+    public String[] executeCommand(String cmd, String id) {
+        return executeCommand(cmd,"./", id);
     }
 }
