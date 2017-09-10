@@ -65,18 +65,33 @@
 					
 					$("#new-terminal-tab").before(newTerminalLink);
 				});
+                
+                $.ajax({
+                    url: 'JRTweb',
+                    data: {
+                        command: "new",
+                        terminal: $($(".terminal-tab.w3-white")[0]).attr("id").split("-")[2],
+                        type:'get',
+                        cache:false
+                    }
+                });
 			});
             
             // Terminal tab click
             $(function() {
                 $('body').on('click', '.terminal-tab', function() {
                     var new_tab_id = $(this).attr("id").split("-")[2];
+                    var old_tab_id = $($(".terminal-tab.w3-white")[0]).attr("id").split("-")[2];
                     
                     // Adjusting style
                     $($(".terminal-tab.w3-white")[0]).removeClass("w3-white").addClass("w3-hover-white");
                     $(this).removeClass("w3-hover-white").addClass("w3-white");
                     
+                    // Hiding old terminal's outputs
+                    $(".t" + old_tab_id).hide();
                     
+                    // Showing new terminal's outputs
+                    $(".t" + new_tab_id).show();
                 });
             });
 		</script>
@@ -124,6 +139,7 @@
                     url: 'JRTweb',
                     data: {
                         command:"quit",
+                        terminal: $($(".terminal-tab.w3-white")[0]).attr("id").split("-")[2],
                         type:'get',
                         cache:false
                     }
@@ -667,7 +683,7 @@
                         el.append(
                             '<div class="loading"><span></span></div>'+
                             '<div class="content">'+
-                                '<div>' + settings.i18n.welcome + '</div>'+
+                                '<div' + /*' class="t' + $($(".terminal-tab.w3-white")[0]).attr("id").split("-")[2] + '"' +*/ '>' + settings.i18n.welcome + '</div>'+
                             '</div>'+
                             '<div class="prompt">'+
                                 '<div class="input" contenteditable '+
@@ -879,7 +895,7 @@
                             if(!quiet){
                                 // output
                                 content.append(
-                                    '<div>'+
+                                    '<div class="t' + $($(".terminal-tab.w3-white")[0]).attr("id").split("-")[2] + '">'+
                                         '<div class="cmd_in"><span class="cmd_ps">'+input.attr('data-ps')+'</span>'+cmd_last+'</div>'+
                                         '<div class="cmd_out">'+cmd_out+'</div>'+
                                     '</div>'
@@ -943,7 +959,6 @@
                                     history.shift();
                                 }
                                 history.push( $.trim(str) );
-                                console.log($.trim(str) + "added to history");
                             }
                             // Reset history position
                             hcurrent = 0;
@@ -1082,7 +1097,13 @@
                                             if(path === "null" || path === undefined)
                                                 path = "";  
 
+                                            // Appending command output
                                             $(output).appendTo(".content")[0];
+                                            
+                                            // Setting "tx" class to the <rep class="response"></rep> object
+                                            $($(".content .response").last()[0]).addClass("t" + $($(".terminal-tab.w3-white")[0]).attr("id").split("-")[2])
+                                            
+                                            // Printing prompt 
                                             $("#terminal div.prompt div.input")[0].setAttribute("data-ps", path.concat(">"));
                                         },
                                         error:function(){
