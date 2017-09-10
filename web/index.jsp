@@ -269,7 +269,7 @@
                             if(theme === 'boring'){
                                 var boring_theme = [
                                     '.boring, .boring .prompt, .boring .content'+
-                                        '{ font-family: "Courier New", Courier, monospace; background-color: #111; color: #ddd; }',
+                                        '{ font-family: "Courier New", Courier, monospace; background-color: black; color: #ddd; }',
                                     '.boring .content'+
                                         '{ padding: 15px 15px 0 15px; }',
                                     '.boring .prompt'+
@@ -1051,21 +1051,13 @@
                                         type:'get',
                                         cache:false,
                                         success:function(data){
-                                            console.log(data);
                                             output = data.split(";;;")[0];
                                             path = data.split(";;;")[1];
                                             if(path !== undefined)
                                                 path = path.trim();
                                             
-                                            console.log(path);
-                                            
-                                            if(path === "null" || path === undefined) {
-                                                console.log("path was invalid");
+                                            if(path === "null" || path === undefined)
                                                 path = "";  
-                                            }
-                                            else {
-                                                console.log("path is ok and it is: " + path);
-                                            }
 
                                             $(output).appendTo(".content")[0];
                                             $("#terminal div.prompt div.input")[0].setAttribute("data-ps", path.concat(">"));

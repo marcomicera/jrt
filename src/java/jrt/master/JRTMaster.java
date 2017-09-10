@@ -158,6 +158,7 @@ public class JRTMaster extends HttpServlet {
                 connected = false;
                 slave = null;
                 path ="";
+                print(writer, " ");
                 
                 break;
 
