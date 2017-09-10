@@ -23,6 +23,7 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -39,13 +40,14 @@ import jrt.slave.JRTSlave;
 public class JRTMaster extends HttpServlet {
     private JRTSlave slave;
     private boolean connected;
-    private String cmd, path;
+    private String cmd, path, id;
     
     @Override
     public void init() {
         slave = null;
         connected = false;
         path = null;
+        id = UUID.randomUUID().toString();
     }
     
     @Override
@@ -67,12 +69,12 @@ public class JRTMaster extends HttpServlet {
         }
     }
     
-    private String[] executeCommand(JRTSlave slave, String cmd, String path) {
+    private String[] executeCommand(JRTSlave slave, String cmd, String path, String id) {
         try {
             if(path == null || path.equals("") == true)
-                return slave.executeCommand("cmd /c " + cmd);
+                return slave.executeCommand("cmd /c " + cmd, id);
             else
-                return slave.executeCommand("cmd /c " + cmd, path); 
+                return slave.executeCommand("cmd /c " + cmd, path, id); 
             
         } catch (RemoteException ex) {
             Logger.getLogger(JRTMaster.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,8 +82,8 @@ public class JRTMaster extends HttpServlet {
         }
     }
     
-    private String pwd(JRTSlave slave, String path) {
-        String pwd = executeCommand(slave, "echo %cd%", path)[0];
+    private String pwd(JRTSlave slave, String path, String id) {
+        String pwd = executeCommand(slave, "echo %cd%", path, id)[0];
         return pwd.trim();
     }
     
@@ -132,7 +134,7 @@ public class JRTMaster extends HttpServlet {
                     print(writer, "Something was wrong with the parameters: please, try again");
                     break;
                 }
-                path = pwd(slave, "./");
+                path = pwd(slave, "./", id);
                 
                 print(writer, "Connection established successfully!");
                 connected = true;
@@ -175,7 +177,7 @@ public class JRTMaster extends HttpServlet {
                     break;
                 }
 
-                String[] result = executeCommand(slave, cmd, path);
+                String[] result = executeCommand(slave, cmd, path, id);
                 path = result[1];
                 print(writer, (result == null) ? "Command unsupported" : result[0]);
                 break;

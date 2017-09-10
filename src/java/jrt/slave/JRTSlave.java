@@ -25,6 +25,6 @@ import java.rmi.RemoteException;
  * @author Marco Micera, Leonardo Bernardi
  */
 public interface JRTSlave extends Remote {
-    public String[] executeCommand(String cmd) throws RemoteException;
-    public String[] executeCommand(String cmd, String path) throws RemoteException;
+    public String[] executeCommand(String cmd, String id) throws RemoteException;
+    public String[] executeCommand(String cmd, String path, String id) throws RemoteException;
 }

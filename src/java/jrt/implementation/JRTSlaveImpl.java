@@ -38,33 +38,9 @@ import jrt.slave.JRTSlave;
  *
  * @author Marco Micera, Leonardo Bernardi
  */
-public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
-    // RMI registry
-    private String ipAddr;
-    private int port;
-    
-    private static final String SERVANT_NAME = "RemoteTerminal";
-    
-    /**
-     * Constructor: create a JRC slave with the specified port
-     * @param port the specified registry port
-     * @throws RemoteException 
-     */
-    public JRTSlaveImpl(int port) throws RemoteException {
-        // Retrieving IP address
-        try {
-            ipAddr = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException ex) {
-            System.out.println("Couldn't get node's IP address: terminating...");
-            ipAddr = null;
-            System.exit(0);
-        }
+public class JRTSlaveImpl {
+    public JRTSlaveImpl() {
         
-        this.port = port;
-        
-        // Making node's methods available to the network thanks to RMI
-        startRegistry();
-        bindObject();
     }
     
     /**
@@ -72,7 +48,6 @@ public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
      * @param cmd command to be executed
      * @return the command output
      */
-    @Override
     public String[] executeCommand(String cmd, String path) {
         System.out.println("Server has requested the " + cmd + " command. Replying...");        
         
@@ -107,65 +82,8 @@ public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
         
         return arrayOutput;
     }
-    @Override
+    
     public String[] executeCommand(String cmd) {
         return executeCommand(cmd,"./");
-    }
-    /**
-     * Starts the RMI registry
-     * @throws RemoteException 
-     */
-    private void startRegistry() throws RemoteException {
-        LocateRegistry.createRegistry(port);
-    }
-    
-    /**
-     * Binds the JRT client to its URL
-     * @throws RemoteException 
-     */
-    private void bindObject() throws RemoteException {
-        try {
-            Naming.rebind(
-                // symbolic name
-                "//" + ipAddr + ":" + Integer.toString(port) + "/" + SERVANT_NAME,
-
-                // stub
-                this
-            );
-        } catch(MalformedURLException ex) {
-            Logger.getLogger(JRTSlaveImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    @Override
-    public String toString() {
-        return
-            "[SLAVE INFOS]\nIP address: " + ipAddr +
-            "\nPort: " + port
-        ;
-    }
-    
-    /**
-     * Main method which will handle multiple command requests from
-     * the master in a multi-threaded fashion
-     * @param args there should be only one parameter, the registry port
-     * @throws RemoteException 
-     */
-    public static void main(String[] args) throws RemoteException {
-        // Checking command line input
-        if(args.length != 1) {
-            System.out.println("Usage: java jrt.implementation.JRTSlaveImpl <port>");
-            return;
-        }
-        if(Long.parseLong(args[0]) > 65535 || Long.parseLong(args[0]) < 0) {
-            System.out.println("Invalid port number");
-            return;
-        }
-        
-        JRTSlave slave = new JRTSlaveImpl(Integer.parseInt(args[0]));
-        
-        // Printing slave infos
-        System.out.println(slave);
-        System.out.println("\n[REQUESTS]");
     }
 }
