@@ -918,14 +918,15 @@
 
                         // Add to history
                         var add_to_history = function(str) {
-                            if( typeof commands[cmd_name] !== 'undefined' 
-                                && str !== '' 
+                            if( /*typeof commands[cmd_name] !== 'undefined' 
+                                &&*/ str !== '' 
                                 && save_to_history > 0) {
 
                                 if( history.length > settings.history_entries ){
                                     history.shift();
                                 }
                                 history.push( $.trim(str) );
+                                console.log($.trim(str) + "added to history");
                             }
                             // Reset history position
                             hcurrent = 0;
@@ -1045,6 +1046,8 @@
                                     e.preventDefault();
                                     document.execCommand('insertHTML', false, '');
                                     
+                                    add_to_history($(".prompt")[0].outerText);
+                                    
                                     $.ajax({
                                         url:'JRTweb',
                                         data:{command: $(".prompt")[0].outerText},
@@ -1070,6 +1073,7 @@
                                     cmd_start();
                                     
                                     break;
+                                    
                                 // Escape key
                                 case 27:
                                     cmd_opts = {
