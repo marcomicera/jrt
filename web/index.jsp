@@ -1046,23 +1046,33 @@
                                     document.execCommand('insertHTML', false, '');
                                     
                                     $.ajax({
-                                       url:'JRTweb',
-                                       data:{command: $(".prompt")[0].outerText},
-                                       type:'get',
-                                       cache:false,
-                                       success:function(data){
-                                          console.log(data);
-                                          output = data.split(";;;")[0];
-                                          if(data.split(";;;")[1] != "null" && data.split(";;;")[1] != undefined)
-                                            path = data.split(";;;")[1].trim();
-                                          else
-                                            path="";
-                                          $(output).appendTo(".content")[0];
-                                          $("#terminal div.prompt div.input")[0].setAttribute("data-ps", path.concat(">"));
-                                       },
-                                       error:function(){
-                                         alert('error');
-                                       }
+                                        url:'JRTweb',
+                                        data:{command: $(".prompt")[0].outerText},
+                                        type:'get',
+                                        cache:false,
+                                        success:function(data){
+                                            console.log(data);
+                                            output = data.split(";;;")[0];
+                                            path = data.split(";;;")[1];
+                                            if(path !== undefined)
+                                                path = path.trim();
+                                            
+                                            console.log(path);
+                                            
+                                            if(path === "null" || path === undefined) {
+                                                console.log("path was invalid");
+                                                path = "";  
+                                            }
+                                            else {
+                                                console.log("path is ok and it is: " + path);
+                                            }
+
+                                            $(output).appendTo(".content")[0];
+                                            $("#terminal div.prompt div.input")[0].setAttribute("data-ps", path.concat(">"));
+                                        },
+                                        error:function(){
+                                            alert('error');
+                                        }
                                     });
                 
                                     cmd_start();
