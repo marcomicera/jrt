@@ -23,7 +23,6 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -104,7 +103,7 @@ public class JRTMaster extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         
-        //print(writer, "> ");
+        String terminal = request.getParameter("terminal");
         cmd = request.getParameter("command");
 
         String[] splitted = cmd.split("\\s+");

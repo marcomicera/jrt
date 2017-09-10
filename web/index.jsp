@@ -192,7 +192,7 @@
                             // Language
                             i18n : {
                                 // Message to be shown when the terminal is first 
-                                welcome : 'Master program started\n',
+                                welcome : 'Master program started',
                                 // When command is not found: "CMD" will be replaced
                                 error_not_found : 'Command not found.',
                                 // If command method is not valid
@@ -1067,7 +1067,10 @@
                                     
                                     $.ajax({
                                         url:'JRTweb',
-                                        data:{command: $(".prompt")[0].outerText},
+                                        data: {
+                                            command: $(".prompt")[0].outerText,
+                                            terminal: $($(".terminal-tab.w3-white")[0]).attr("id").split("-")[2]
+                                        },
                                         type:'get',
                                         cache:false,
                                         success:function(data){
