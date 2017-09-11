@@ -1013,12 +1013,15 @@
                                         success:function(data){
                                             console.log(data);
                                             output = data.split(";;;")[0];
+                                            var previous_path = path;
                                             path = data.split(";;;")[1];
                                             if(path !== undefined)
                                                 path = path.trim();
                                             
                                             if(path === "null" || path === undefined)
-                                                path = "";  
+                                                path = "";
+                                            else if(path === "")
+                                                path = previous_path;
 
                                             $(output).appendTo(".content")[0];
                                             $("#terminal div.prompt div.input")[0].setAttribute("data-ps", path.concat(">"));
