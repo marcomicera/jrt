@@ -884,7 +884,6 @@
                                     history.shift();
                                 }
                                 history.push( $.trim(str) );
-                                console.log($.trim(str) + "added to history");
                             }
                             // Reset history position
                             hcurrent = 0;
@@ -1012,6 +1011,7 @@
                                         type:'get',
                                         cache:false,
                                         success:function(data){
+                                            console.log(data);
                                             output = data.split(";;;")[0];
                                             path = data.split(";;;")[1];
                                             if(path !== undefined)
