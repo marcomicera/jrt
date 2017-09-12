@@ -1012,8 +1012,8 @@
                                     $.ajax({
                                         url:'JRTweb',
                                         data:{
-                                            command: $(".prompt")[0].outerText /*,
-                                            id: */
+                                            command: $(".prompt")[0].outerText,
+                                            id: id
                                         },
                                         type:'get',
                                         cache:false,
