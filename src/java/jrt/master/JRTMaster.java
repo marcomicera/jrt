@@ -63,12 +63,12 @@ public class JRTMaster {
         }
     }
     
-    private String[] executeCommand(JRTSlave slave, String cmd, String path) {
+    private String[] executeCommand(JRTSlave slave, String cmd, String path, String id) {
         try {
             if(path == null || path.equals("") == true)
-                return slave.executeCommand("cmd /c " + cmd);
+                return slave.executeCommand("cmd /c " + cmd, id);
             else
-                return slave.executeCommand("cmd /c " + cmd, path); 
+                return slave.executeCommand("cmd /c " + cmd, path, id); 
             
         } catch (RemoteException ex) {
             Logger.getLogger(JRTMaster.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,8 +76,8 @@ public class JRTMaster {
         }
     }
     
-    private String pwd(JRTSlave slave, String path) {
-        String pwd = executeCommand(slave, "echo %cd%", path)[0];
+    private String pwd(JRTSlave slave, String path, String id) {
+        String pwd = executeCommand(slave, "echo %cd%", path, id)[0];
         return pwd.trim();
     }
     
@@ -99,6 +99,7 @@ public class JRTMaster {
         PrintWriter writer = response.getWriter();
         
         cmd = request.getParameter("command");
+        String id = request.getParameter("id");
 
         String[] splitted = cmd.split("\\s+");
 
@@ -126,7 +127,7 @@ public class JRTMaster {
                     print(writer, "Something was wrong with the parameters: please, try again");
                     break;
                 }
-                path = pwd(slave, "./");
+                path = pwd(slave, "./", id);
                 
                 print(writer, "Connection established successfully!");
                 connected = true;
@@ -169,7 +170,7 @@ public class JRTMaster {
                     break;
                 }
 
-                String[] result = executeCommand(slave, cmd, path);
+                String[] result = executeCommand(slave, cmd, path, id);
                 path = result[1];
                 print(writer, (result == null) ? "Command unsupported" : result[0]);
                 break;

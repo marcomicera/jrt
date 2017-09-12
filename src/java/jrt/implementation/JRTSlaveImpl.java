@@ -73,8 +73,8 @@ public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
      * @return the command output
      */
     @Override
-    public String[] executeCommand(String cmd, String path) {
-        System.out.println("Server has requested the " + cmd + " command. Replying...");        
+    public String[] executeCommand(String cmd, String path, String id) {
+        System.out.println("Server " + id + " has requested the " + cmd + " command. Replying...");        
         
         StringBuffer output = new StringBuffer();
 
@@ -108,7 +108,7 @@ public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
         return arrayOutput;
     }
     @Override
-    public String[] executeCommand(String cmd) {
+    public String[] executeCommand(String cmd, String id) {
         return executeCommand(cmd,"./");
     }
     /**
