@@ -59,13 +59,15 @@
              * @license: WTFPL Version 2. (http://www.wtfpl.net/)
              **/
             var path = null;
+            var id = null;
             
             function reset(){
+                id = Math.floor(Math.random() * 100000000000);
                 $.ajax({
                     url: 'JRTweb',
                     data: {
                         command:"quit",
-                        // id: 
+                        id: id, 
                         type:'get',
                         cache:false
                     }
