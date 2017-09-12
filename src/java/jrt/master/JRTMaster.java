@@ -36,20 +36,16 @@ import jrt.slave.JRTSlave;
  * @author Marco Micera, Leonardo Bernardi
  */
 
-public class JRTMaster extends HttpServlet {
+public class JRTMaster {
     private JRTSlave slave;
     private boolean connected;
     private String cmd, path;
     
-    @Override
-    public void init() {
+    
+    public JRTMaster() {
         slave = null;
         connected = false;
         path = null;
-    }
-    
-    @Override
-    public void destroy() {
     }
     
     /**
@@ -97,13 +93,11 @@ public class JRTMaster extends HttpServlet {
         writer.println(text + ";;;" + path);
     }
     
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         
-        //print(writer, "> ");
         cmd = request.getParameter("command");
 
         String[] splitted = cmd.split("\\s+");
