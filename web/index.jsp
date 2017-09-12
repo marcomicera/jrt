@@ -65,6 +65,7 @@
                     url: 'JRTweb',
                     data: {
                         command:"quit",
+                        // id: 
                         type:'get',
                         cache:false
                     }
@@ -1008,7 +1009,10 @@
                                     
                                     $.ajax({
                                         url:'JRTweb',
-                                        data:{command: $(".prompt")[0].outerText},
+                                        data:{
+                                            command: $(".prompt")[0].outerText /*,
+                                            id: */
+                                        },
                                         type:'get',
                                         cache:false,
                                         success:function(data){
