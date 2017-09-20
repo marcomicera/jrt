@@ -19,7 +19,7 @@
             .fa-anchor,.fa-coffee {font-size:200px}
 			
 			body {
-				background: blue;
+				background: black;
 			}
 			
 			.shell {
