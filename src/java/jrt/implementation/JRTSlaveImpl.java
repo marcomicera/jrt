@@ -81,7 +81,7 @@ public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
         Process p;
         String nextPath = "";
         try {
-            p = Runtime.getRuntime().exec(cmd + " && cd", null, new File(path));
+            p = Runtime.getRuntime().exec(cmd + " & cd", null, new File(path));
             p.waitFor();
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -109,7 +109,7 @@ public class JRTSlaveImpl extends UnicastRemoteObject implements JRTSlave {
     }
     @Override
     public String[] executeCommand(String cmd, String id) {
-        return executeCommand(cmd,"./");
+        return executeCommand(cmd,"./", id);
     }
     /**
      * Starts the RMI registry
