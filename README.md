@@ -5,3 +5,5 @@ Java Remote Terminal Web Application, a Java project made by [Leonardo Bernardi]
 The application allows a "Master" PC to access a "Slave"'s command prompt via a simple browser.
 
 Check our [presentation](https://docs.google.com/presentation/d/10shS9a3MBnGzHJxVN00AkiPB5oL0qMSft7UazxxIZK8/edit?usp=sharing) to learn more.
+
+![App architecture](http://marcomicera.altervista.org/projects/cds/JRTweb.png)
