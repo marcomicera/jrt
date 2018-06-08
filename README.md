@@ -1,7 +1,7 @@
 # JRTweb
 Java Remote Terminal Web Application, a Java project made by [Leonardo Bernardi](https://github.com/bernardileonardo) and [Marco Micera](http://marcomicera.altervista.org) for the Concurrent and Distributed Systems course during the Master's Degree in Computer Systems and Networks Engineering at the University of Pisa, Italy.
 <br />
-<p align="center"><img width="550" src="http://marcomicera.altervista.org/projects/cds/summary.PNG" /></p>
+<p align="center"><img src="http://rbk.altervista.org/app.png" /></p>
 
 ### Description
 The application allows a "Master" PC to access a "Slave"'s command prompt via a simple browser.
